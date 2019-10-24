@@ -20,7 +20,10 @@ public class QUser extends EntityPathBase<User> {
 
     public static final QUser user = new QUser("user");
 
-    public final DateTimePath<java.util.Date> createAt = createDateTime("createAt", java.util.Date.class);
+    public final QAuditable _super = new QAuditable(this);
+
+    //inherited
+    public final DateTimePath<java.util.Date> createAt = _super.createAt;
 
     public final StringPath email = createString("email");
 
@@ -30,9 +33,10 @@ public class QUser extends EntityPathBase<User> {
 
     public final NumberPath<Integer> personId = createNumber("personId", Integer.class);
 
-    public final ListPath<Role, QRole> roles = this.<Role, QRole>createList("roles", Role.class, QRole.class, PathInits.DIRECT2);
+    public final ListPath<br.com.bureau.gateway.models.enums.Role, EnumPath<br.com.bureau.gateway.models.enums.Role>> roles = this.<br.com.bureau.gateway.models.enums.Role, EnumPath<br.com.bureau.gateway.models.enums.Role>>createList("roles", br.com.bureau.gateway.models.enums.Role.class, EnumPath.class, PathInits.DIRECT2);
 
-    public final DateTimePath<java.util.Date> updateAt = createDateTime("updateAt", java.util.Date.class);
+    //inherited
+    public final DateTimePath<java.util.Date> updateAt = _super.updateAt;
 
     public QUser(String variable) {
         super(User.class, forVariable(variable));

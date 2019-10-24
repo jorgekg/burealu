@@ -1,33 +1,38 @@
 package br.com.bureau.gateway.models;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import br.com.bureau.gateway.models.enums.Role;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-public class User implements Serializable {
+public class User extends Auditable implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	@ApiModelProperty(value = "Sequence code by user")
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public Integer id;
 	
 	@Column(name = "person_id", nullable = true)
 	private Integer personId;
@@ -40,22 +45,14 @@ public class User implements Serializable {
 	@NotNull(message = "Password is required")
 	private String password;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@Enumerated(EnumType.STRING)
+	@ElementCollection(fetch = FetchType.EAGER)
 	private List<Role> roles;
 	
-	private Date createAt;
-	private Date updateAt;
-
-	public User() {
-
+	@PrePersist
+	private void addRoleByNewUser() {
+		this.roles = new ArrayList<Role>();
+		this.roles.add(Role.DETAILS);
 	}
 
-	public User(Integer id, String email, String password, Date createAt, Date updateAt) {
-		super();
-		this.id = id;
-		this.email = email;
-		this.password = password;
-		this.createAt = createAt;
-		this.updateAt = updateAt;
-	}
 }

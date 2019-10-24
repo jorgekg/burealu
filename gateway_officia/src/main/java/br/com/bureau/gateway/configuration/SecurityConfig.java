@@ -34,9 +34,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private JWTUtil jwtUtil;
 
-	private static final String[] PUBLIC_MATCHERS = {"/face_landmarks/landmarks", "/actuator", "/actuator/prometheus" };
+	private static final String[] PUBLIC_MATCHERS = {};
 
-	private static final String[] PUBLIC_MATCHERS_POST = { };
+	private static final String[] PUBLIC_MATCHERS_POST = { "/users" };
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {

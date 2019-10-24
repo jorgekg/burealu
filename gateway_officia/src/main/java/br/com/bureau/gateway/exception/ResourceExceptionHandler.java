@@ -29,11 +29,18 @@ public class ResourceExceptionHandler {
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<StandardError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
 		
-		ValidationError err = new ValidationError(HttpStatus.BAD_REQUEST.value(), "Erro de validação", -1, System.currentTimeMillis());
+		ValidationError err = new ValidationError(HttpStatus.BAD_REQUEST.value(), "Validation error", -1, System.currentTimeMillis());
 		for (FieldError x : e.getBindingResult().getFieldErrors()) {
 			err.addError(x.getField(), x.getDefaultMessage());
 		}		
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+	}
+	
+	@ExceptionHandler(EmailExistsException.class)
+	public ResponseEntity<StandardError> emailExistsException(EmailExistsException e, HttpServletRequest request) {
+		
+		StandardError err = new StandardError(HttpStatus.CONFLICT.value(), "This e-mail has existis", HttpStatus.CONFLICT.value(), System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.CONFLICT).body(err);
 	}
 	
 }
