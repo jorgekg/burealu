@@ -46,6 +46,7 @@ public class UserService {
 			this.findEmail(user.getEmail());
 			throw new EmailExistsException();
 		} catch (ObjectNotFoundException e) {
+			System.out.println("aqui");
 		} catch (EmailExistsException e) {
 			throw e;
 		}

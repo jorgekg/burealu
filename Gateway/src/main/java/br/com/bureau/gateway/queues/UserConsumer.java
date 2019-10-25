@@ -1,6 +1,7 @@
 package br.com.bureau.gateway.queues;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
@@ -19,20 +20,28 @@ public class UserConsumer {
 	@Autowired
 	private UserService userService;
 	
-	@RabbitListener(queues = {"${queue.get.user}"})
+	@Autowired
+	private RabbitTemplate rabbitTemplate;
+	
+	@RabbitListener(queues = {"${queue.user}"})
 	public void consumer(@Header("token") String token, @Header("id") String requestId) {
 	    System.out.println("Message read from get.user id " + requestId);
-	    User user = null;
 	    if (this.jwtUtil.isValidToken(token)) {
 	    	String email = this.jwtUtil.getUsername(token);
 	    	System.out.println(email);
 	    	try {
-	    		user = this.userService.findEmail(email);
+	    		User user = this.userService.findEmail(email);
+	    		this.rabbitTemplate.convertAndSend("br.com.bureau.response.user", user, params -> {
+		    		params.getMessageProperties().getHeaders().put("id", requestId);
+		    		return params;
+		    	});
 	    	} catch (Exception e) {
-	    		// ignore this errors
+	    		this.rabbitTemplate.convertAndSend("br.com.bureau.response.user", "", params -> {
+		    		params.getMessageProperties().getHeaders().put("id", requestId);
+		    		return params;
+		    	});
 			}
 	    }
-	    System.out.println(user);
 	}
 	
 }

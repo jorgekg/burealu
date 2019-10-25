@@ -1,4 +1,4 @@
-package br.com.bureau.gateway.configuration;
+package br.com.bureau.tracking.configurations;
 
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -11,12 +11,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQUserConfig {
 	
-	@Value("${queue.user}")
-    private String getUserQueue;
+	@Value("${queue.response.user}")
+    private String getUserReponse;
+
 	
 	@Bean
-	public Queue getUser() {
-		return new Queue(this.getUserQueue, true);
+	public Queue userReponse() {
+		return new Queue(this.getUserReponse, false);
 	}
 	
 	@Bean
