@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class userDTO {
+public class UserDTO {
 
 	private Integer id;
 	private Integer personId;

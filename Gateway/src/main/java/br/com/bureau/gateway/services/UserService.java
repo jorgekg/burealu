@@ -54,6 +54,12 @@ public class UserService {
 		return this.userRepository.save(user);
 	}
 	
+	public void updateRoles(Integer id, List<Role> roles) {
+		User user = this.find(id);
+		user.setRoles(roles);
+		this.userRepository.save(user);
+	}
+	
 	public User updatePassword(User user) {
 		User userLogged = this.getUserLogged();
 		userLogged.setPassword(this.bCryptPasswordEncode.encode(user.getPassword()));

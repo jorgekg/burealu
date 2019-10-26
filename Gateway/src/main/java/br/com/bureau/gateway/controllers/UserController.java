@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.bureau.gateway.dtos.userDTO;
+import br.com.bureau.gateway.dtos.UserDTO;
 import br.com.bureau.gateway.mappers.UserMapper;
 import br.com.bureau.gateway.models.User;
 import br.com.bureau.gateway.models.enums.Role;
@@ -36,7 +36,7 @@ public class UserController {
 			@ApiResponse(code = 400, message = "Fields required not found")
 	})
 	@PostMapping
-	public ResponseEntity<userDTO> create(@Valid @RequestBody User user) {
+	public ResponseEntity<UserDTO> create(@Valid @RequestBody User user) {
 		return ResponseEntity.ok().body(UserMapper.toDTO(this.userService.create(user)));
 	}
 	

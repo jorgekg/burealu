@@ -19,12 +19,16 @@ import javax.validation.constraints.NotNull;
 
 import br.com.bureau.gateway.models.enums.Role;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class User extends Auditable implements Serializable {
 
 	private static final long serialVersionUID = 1L;
