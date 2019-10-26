@@ -1,7 +1,7 @@
 package br.com.bureau.tracking.exceptions;
 
-public class EmailExistsException extends RuntimeException {
+public class CpfExistsException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
-	
+
 }

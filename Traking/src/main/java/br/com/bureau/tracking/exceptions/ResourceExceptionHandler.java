@@ -2,6 +2,7 @@ package br.com.bureau.tracking.exceptions;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -17,6 +18,13 @@ public class ResourceExceptionHandler {
 		
 		StandardError err = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(), HttpStatus.NOT_FOUND.value(), System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+	}
+	
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	public ResponseEntity<StandardError> dataIntegrityViolationException(DataIntegrityViolationException e, HttpServletRequest request) {
+		
+		StandardError err = new StandardError(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage(), HttpStatus.NOT_FOUND.value(), System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(err);
 	}
 	
 	@ExceptionHandler(AuthorizationException.class)
@@ -36,10 +44,10 @@ public class ResourceExceptionHandler {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 	}
 	
-	@ExceptionHandler(EmailExistsException.class)
-	public ResponseEntity<StandardError> emailExistsException(EmailExistsException e, HttpServletRequest request) {
+	@ExceptionHandler(CpfExistsException.class)
+	public ResponseEntity<StandardError> cpfExistsException(CpfExistsException e, HttpServletRequest request) {
 		
-		StandardError err = new StandardError(HttpStatus.CONFLICT.value(), "This e-mail has existis", HttpStatus.CONFLICT.value(), System.currentTimeMillis());
+		StandardError err = new StandardError(HttpStatus.CONFLICT.value(), "This cpf has exists", HttpStatus.NOT_FOUND.value(), System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(err);
 	}
 	

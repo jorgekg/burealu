@@ -36,9 +36,9 @@ public class CustomAuthorization extends GenericFilterBean {
 				this.sendFaileAuthorization(response);
 				return;
 			}
-			chain.doFilter(request, response);
 			UsernamePasswordAuthenticationToken details = new UsernamePasswordAuthenticationToken(user, null, null);
 			SecurityContextHolder.getContext().setAuthentication(details);
+			chain.doFilter(request, response);
 	    } else {
 	    	this.sendFaileAuthorization(response);
 	    }

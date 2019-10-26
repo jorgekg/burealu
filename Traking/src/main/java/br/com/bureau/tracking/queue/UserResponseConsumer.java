@@ -2,8 +2,8 @@ package br.com.bureau.tracking.queue;
 
 import java.util.HashMap;
 
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +29,8 @@ public class UserResponseConsumer {
 	}
 	
 	@RabbitListener(queues = {"${queue.response.user}"})
-	public void consumer(@Payload(required = false) UserDTO user, @Header("uuid") String responseId) {
+	public void consumer(@Payload(required = false) UserDTO user, @Payload Message message) {
+		String responseId = message.getMessageProperties().getHeaders().get("uuid").toString();
 		if (user != null && user.getEmail() != null) {
 		    buffer.put(Integer.parseInt(responseId), user);
 		} else {

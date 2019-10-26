@@ -1,8 +1,9 @@
 package br.com.bureau.gateway.queues;
 
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 import br.com.bureau.gateway.models.User;
@@ -23,7 +24,9 @@ public class UserConsumer {
 	private UserSender userSender;
 	
 	@RabbitListener(queues = {"${queue.user}"})
-	public void consumer(@Header("token") String tokenBearer, @Header("uuid") String requestId) {
+	public void consumer(@Payload Message message) {
+		String tokenBearer = message.getMessageProperties().getHeaders().get("token").toString();
+		String requestId = message.getMessageProperties().getHeaders().get("uuid").toString();
 	    System.out.println("Consumer message read from user id " + requestId);
 	    String token = tokenBearer.replace("Bearer ", "");
 	    User user = null;
