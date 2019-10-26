@@ -2,6 +2,8 @@ zuul:
   routes:
     traking-api:
       sensitiveHeaders:
+    earnings-api:
+      sensitiveHeaders:
     
 hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 60000
 

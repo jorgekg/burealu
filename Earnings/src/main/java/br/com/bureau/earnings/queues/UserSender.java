@@ -1,4 +1,4 @@
-package br.com.bureau.tracking.queue;
+package br.com.bureau.earnings.queues;
 
 import java.util.Random;
 
@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import br.com.bureau.tracking.dto.UserDTO;
-import br.com.bureau.tracking.exceptions.TimeoutException;
+import br.com.bureau.earnings.dto.UserDTO;
+import br.com.bureau.earnings.exceptions.TimeoutException;
 
 @Component
 public class UserSender {
@@ -56,5 +56,4 @@ public class UserSender {
 				? this.responseConsumer.getBuffer().get(id)
 				: null;
 	}
-	
 }

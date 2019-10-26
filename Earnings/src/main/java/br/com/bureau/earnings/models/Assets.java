@@ -1,7 +1,6 @@
-package br.com.bureau.tracking.models;
+package br.com.bureau.earnings.models;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import org.springframework.stereotype.Component;
+
 import org.springframework.util.DigestUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -22,26 +21,22 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Component
-public class Person implements Serializable, ICertificated {
+public class Assets implements Serializable, ICertificated {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-
-	@Column(nullable = true, columnDefinition = "TEXT")
-	private String cpf;
-
-	@Column(nullable = true, columnDefinition = "TEXT")
-	private String name;
-
-	@Column(nullable = true)
-	private Date birth;
+	
+	private Integer personId;
+	
+	private String asstes;
+	
+	private Double price;
 	
 	@JsonIgnore
 	@Column(columnDefinition = "TEXT")
@@ -55,7 +50,6 @@ public class Person implements Serializable, ICertificated {
 
 	@Override
 	public String toString() {
-		return cpf + name;
+		return "Assets [asstes=" + asstes + ", price=" + price + "]";
 	}
-
 }

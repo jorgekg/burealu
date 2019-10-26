@@ -1,9 +1,8 @@
-package br.com.bureau.tracking.dto;
+package br.com.bureau.earnings.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import br.com.bureau.tracking.models.Person;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,16 +12,15 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DebitDTO {
+public class AssetsDTO {
 
 	private Integer id;
 	
-	private Person person;
-	
-	@NotNull(message = "Company is required")
-	@NotEmpty(message = "Comapny is requred")
-	private String company;
+	@NotNull(message = "Assets is required")
+	@NotEmpty(message = "Assets is required")
+	private String asstes;
 	
 	@NotNull(message = "Price is required")
 	private Double price;
+	
 }

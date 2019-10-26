@@ -10,7 +10,6 @@ import br.com.bureau.gateway.models.User;
 import br.com.bureau.gateway.security.JWTUtil;
 import br.com.bureau.gateway.services.UserService;
 
-
 @Component
 public class UserConsumer {
 

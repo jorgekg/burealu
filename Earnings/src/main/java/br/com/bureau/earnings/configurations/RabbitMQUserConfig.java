@@ -1,4 +1,4 @@
-package br.com.bureau.tracking.configurations;
+package br.com.bureau.earnings.configurations;
 
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -14,17 +14,17 @@ public class RabbitMQUserConfig {
 	@Value("${queue.response.user}")
     private String getUserReponse;
 	
-	@Value("${queue.person}")
-    private String getPersonQueue;
-	
+	@Value("${queue.response.person}")
+    private String getPersonReponse;
+
 	@Bean
 	public Queue userReponse() {
 		return new Queue(this.getUserReponse, true);
 	}
 	
 	@Bean
-	public Queue personQueue() {
-		return new Queue(this.getPersonQueue, true);
+	public Queue personReponse() {
+		return new Queue(this.getPersonReponse, true);
 	}
 	
 	@Bean

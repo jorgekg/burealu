@@ -9,6 +9,7 @@ import br.com.bureau.tracking.exceptions.ObjectNotFoundException;
 import br.com.bureau.tracking.models.Debit;
 import br.com.bureau.tracking.models.Person;
 import br.com.bureau.tracking.repositories.DebitRepository;
+import br.com.bureau.tracking.validators.CertificatedValidator;
 
 @Service
 public class DebitService {
@@ -19,19 +20,25 @@ public class DebitService {
 	@Autowired
 	private PersonService personService;
 	
+	@Autowired
+	private CertificatedValidator certificatedValidator;
+	
 	public Debit findByPerson(Integer id, Integer personId) {
 		Person person = this.personService.find(personId);
 		Debit debit = this.debitRepository.findByIdAndPerson(id, person);
 		if (debit == null) {
 			throw new ObjectNotFoundException("Debit " + id + " not found");
 		}
+		this.certificatedValidator.validate(debit);
 		return debit;
 	}
 	
 	public Page<Debit> findAll(Integer personId, Integer page, Integer size) {
 		PageRequest pageRequest = PageRequest.of(page, size);
 		Person person = this.personService.find(personId);
-		return this.debitRepository.findByPerson(person, pageRequest);
+		Page<Debit> debitPage = this.debitRepository.findByPerson(person, pageRequest);
+		debitPage.stream().forEach(debitItem -> this.certificatedValidator.validate(debitItem));
+		return debitPage;
 	}
 	
 	public Debit create(Integer personId, Debit debit) {
@@ -47,6 +54,7 @@ public class DebitService {
 	}
 	
 	public void delete(Integer id, Integer personId) {
-		this.debitRepository.delete(this.findByPerson(id, personId));
+		Debit debit = this.findByPerson(id, personId);
+		this.debitRepository.delete(debit);
 	}
 }
