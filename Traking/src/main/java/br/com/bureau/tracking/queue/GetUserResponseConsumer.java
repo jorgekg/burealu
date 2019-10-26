@@ -1,4 +1,4 @@
-package br.com.bureau.earnings.queues;
+package br.com.bureau.tracking.queue;
 
 import java.util.HashMap;
 
@@ -7,16 +7,16 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
-import br.com.bureau.earnings.dto.UserDTO;
+import br.com.bureau.tracking.dto.UserDTO;
 
 @Component
-public class UserResponseConsumer {
+public class GetUserResponseConsumer {
 	
 	private static HashMap<Integer, UserDTO> buffer;
 	
-	public UserResponseConsumer() {
-		if (UserResponseConsumer.buffer == null) {
-			UserResponseConsumer.buffer = new HashMap<Integer, UserDTO>();
+	public GetUserResponseConsumer() {
+		if (GetUserResponseConsumer.buffer == null) {
+			GetUserResponseConsumer.buffer = new HashMap<Integer, UserDTO>();
 		}
 	}
 	
@@ -40,4 +40,5 @@ public class UserResponseConsumer {
 			buffer.remove(Integer.parseInt(responseId));
 		}
 	}
+	
 }

@@ -15,14 +15,14 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import br.com.bureau.earnings.queues.UserSender;
+import br.com.bureau.earnings.queues.GetUserSender;
 import br.com.bureau.earnings.security.CustomAuthorization;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
-	private UserSender userSender;
+	private GetUserSender userSender;
 	
 	@Override
     protected void configure(HttpSecurity http) throws Exception {

@@ -17,13 +17,13 @@ import org.springframework.web.filter.GenericFilterBean;
 import br.com.bureau.tracking.dto.UserDTO;
 import br.com.bureau.tracking.exceptions.AuthorizationException;
 import br.com.bureau.tracking.models.enuns.Role;
-import br.com.bureau.tracking.queue.UserSender;
+import br.com.bureau.tracking.queue.GetUserSender;
 
 public class CustomAuthorization extends GenericFilterBean {
 	
-	private UserSender userSender;
+	private GetUserSender userSender;
 	
-	public CustomAuthorization(UserSender userSender) {
+	public CustomAuthorization(GetUserSender userSender) {
 		this.userSender = userSender;
 	}
 

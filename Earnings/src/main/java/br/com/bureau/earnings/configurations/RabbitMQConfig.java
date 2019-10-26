@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class RabbitMQUserConfig {
+public class RabbitMQConfig {
 	
 	@Value("${queue.response.user}")
     private String getUserReponse;

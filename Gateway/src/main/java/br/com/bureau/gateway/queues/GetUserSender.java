@@ -1,26 +1,27 @@
-package br.com.bureau.tracking.queue;
+package br.com.bureau.gateway.queues;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import br.com.bureau.tracking.models.Person;
+import br.com.bureau.gateway.models.User;
 
 @Component
-public class PersonResponseSender {
+public class GetUserSender {
 	
-	@Value("${queue.response.person}")
-	private String personResponseQueue;
+	@Value("${queue.response.user}")
+	private String userResponseQueue;
 	
 	@Autowired
 	private RabbitTemplate rabbitTemplate;
 
-	public void sendUser(Person person, String id) {
- 		this.rabbitTemplate.convertAndSend(this.personResponseQueue, person, params -> {
+	public void sendUser(User user, String id) {
+ 		this.rabbitTemplate.convertAndSend(this.userResponseQueue, user == null ? "" : user, params -> {
     		params.getMessageProperties().getHeaders().put("uuid", id);
     		params.getMessageProperties().getHeaders().remove("__TypeId__");
     		return params;
     	});
 	}
+	
 }

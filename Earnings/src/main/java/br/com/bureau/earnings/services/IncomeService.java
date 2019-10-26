@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import br.com.bureau.earnings.dto.PersonDTO;
 import br.com.bureau.earnings.exceptions.ObjectNotFoundException;
 import br.com.bureau.earnings.models.Income;
-import br.com.bureau.earnings.queues.PersonSender;
+import br.com.bureau.earnings.queues.GetPersonSender;
 import br.com.bureau.earnings.repositories.IncomeRepository;
 import br.com.bureau.earnings.validators.CertificatedValidator;
 
@@ -22,7 +22,7 @@ public class IncomeService {
 	private CertificatedValidator certificatedValidator;
 	
 	@Autowired
-	private PersonSender personSender;
+	private GetPersonSender personSender;
 	
 	public Income findByPerson(Integer id, Integer personId) {
 		Income income = this.incomeRepository.findByIdAndPersonId(id, personId);

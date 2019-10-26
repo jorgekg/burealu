@@ -9,13 +9,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class RabbitMQUserConfig {
+public class RabbitMQConfig {
 	
 	@Value("${queue.response.user}")
     private String getUserReponse;
 	
 	@Value("${queue.person}")
     private String getPersonQueue;
+	
+	@Value("${queue.person.update}")
+    private String getPersonUpdateQueue;
 	
 	@Bean
 	public Queue userReponse() {
@@ -25,6 +28,11 @@ public class RabbitMQUserConfig {
 	@Bean
 	public Queue personQueue() {
 		return new Queue(this.getPersonQueue, true);
+	}
+	
+	@Bean
+	public Queue personUpdateQueue() {
+		return new Queue(this.getPersonUpdateQueue, true);
 	}
 	
 	@Bean

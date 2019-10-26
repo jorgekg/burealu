@@ -7,14 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import br.com.bureau.earnings.dto.UserDTO;
+import br.com.bureau.earnings.dto.PersonDTO;
 import br.com.bureau.earnings.exceptions.TimeoutException;
 
 @Component
-public class UserSender {
+public class GetPersonSender {
 
-	@Value("${queue.user}")
-	private String userQueue;
+	@Value("${queue.person}")
+	private String personQueue;
 
 	@Value("${rabbit.timeout}")
 	private Integer timeout;
@@ -23,20 +23,20 @@ public class UserSender {
 	private RabbitTemplate rabbitTemplate;
 
 	@Autowired
-	private UserResponseConsumer responseConsumer;
+	private GetPersonResponseConsumer responseConsumer;
 
-	public UserDTO getUserByTokenSync(String token) {
+	public PersonDTO getPersonByTokenSync(String personId) {
 		Random random = new Random();
 		int id = Math.abs(random.nextInt());
-		this.rabbitTemplate.convertAndSend(this.userQueue, "", params -> {
-			params.getMessageProperties().getHeaders().put("token", token);
+		this.rabbitTemplate.convertAndSend(this.personQueue, "", params -> {
+			params.getMessageProperties().getHeaders().put("personId", personId);
 			params.getMessageProperties().getHeaders().put("uuid", id);
 			return params;
 		});
 		return this.awaitMessage(id);
 	}
 
-	private UserDTO awaitMessage(int id) {
+	private PersonDTO awaitMessage(int id) {
 		this.responseConsumer.setBuffer(id);
 		for (int i = 0; i < this.timeout; i++) {
 			if (this.responseConsumer.getBuffer().containsKey(id)

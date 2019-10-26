@@ -61,4 +61,10 @@ public class PersonService {
 		personFinded.setName(person.getName());
 		return this.personRepository.save(personFinded);
 	}
+	
+	public Person updateBirth(Person person) {
+		Person personFinded = this.find(person.getId());
+		personFinded.setBirth(person.getBirth());
+		return this.personRepository.save(personFinded);
+	}
 }

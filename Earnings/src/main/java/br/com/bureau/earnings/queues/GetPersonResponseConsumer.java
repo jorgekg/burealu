@@ -10,13 +10,13 @@ import org.springframework.stereotype.Component;
 import br.com.bureau.earnings.dto.PersonDTO;
 
 @Component
-public class PersonResponseConsumer {
+public class GetPersonResponseConsumer {
 
 	private static HashMap<Integer, PersonDTO> buffer;
 
-	public PersonResponseConsumer() {
-		if (PersonResponseConsumer.buffer == null) {
-			PersonResponseConsumer.buffer = new HashMap<Integer, PersonDTO>();
+	public GetPersonResponseConsumer() {
+		if (GetPersonResponseConsumer.buffer == null) {
+			GetPersonResponseConsumer.buffer = new HashMap<Integer, PersonDTO>();
 		}
 	}
 
@@ -34,7 +34,7 @@ public class PersonResponseConsumer {
 		if (!buffer.containsKey(Integer.parseInt(responseId))) {
 			throw new Exception("Ignored message");
 		}
-		if (person != null && person.getCpf() != null) {
+		if (person != null && person.getId() != null) {
 			buffer.put(Integer.parseInt(responseId), person);
 		} else {
 			buffer.remove(Integer.parseInt(responseId));

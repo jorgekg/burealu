@@ -11,7 +11,7 @@ import br.com.bureau.gateway.security.JWTUtil;
 import br.com.bureau.gateway.services.UserService;
 
 @Component
-public class UserConsumer {
+public class GetUserConsumer {
 
 	@Autowired
 	private JWTUtil jwtUtil;
@@ -20,7 +20,7 @@ public class UserConsumer {
 	private UserService userService;
 	
 	@Autowired
-	private UserSender userSender;
+	private GetUserSender userSender;
 	
 	@RabbitListener(queues = {"${queue.user}"})
 	public void consumer(@Payload Message message) {

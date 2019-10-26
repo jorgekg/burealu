@@ -2,6 +2,8 @@ package br.com.bureau.earnings.dto;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,8 +16,8 @@ import lombok.Setter;
 public class PersonDTO {
 	
 	private Integer id;
-	private String cpf;
-	private String name;
+	
+	@NotNull(message = "Birth is required")
 	private Date birth;
 
 }

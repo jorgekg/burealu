@@ -10,13 +10,13 @@ import br.com.bureau.tracking.models.Person;
 import br.com.bureau.tracking.services.PersonService;
 
 @Component
-public class PersonConsumer {
+public class GetPersonConsumer {
 
 	@Autowired
 	private PersonService personService;
 
 	@Autowired
-	private PersonResponseSender personResponseSender;
+	private GetPersonResponseSender personResponseSender;
 
 	@RabbitListener(queues = { "${queue.person}" })
 	public void consumer(@Payload Message message) {
@@ -24,7 +24,11 @@ public class PersonConsumer {
 		String uuid = message.getMessageProperties().getHeaders().get("uuid").toString();
 		Person person = null;
 		if (personId != null) {
-			person = this.personService.find(Integer.parseInt(personId));
+			try {
+				person = this.personService.find(Integer.parseInt(personId));
+			} catch (Exception e) {
+				// ignore this error
+			}
 		}
 		this.personResponseSender.sendUser(person, uuid);
 	}

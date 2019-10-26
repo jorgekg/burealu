@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import br.com.bureau.earnings.dto.PersonDTO;
 import br.com.bureau.earnings.exceptions.ObjectNotFoundException;
 import br.com.bureau.earnings.models.Assets;
-import br.com.bureau.earnings.queues.PersonSender;
+import br.com.bureau.earnings.queues.GetPersonSender;
 import br.com.bureau.earnings.repositories.AssetsRepository;
 
 @Service
@@ -18,7 +18,7 @@ public class AssetsService {
 	private AssetsRepository assetsRepository;
 	
 	@Autowired
-	private PersonSender personSender;
+	private GetPersonSender personSender;
 	
 	public Assets findByPerson(Integer id, Integer personId) {
 		Assets assets = this.assetsRepository.findByIdAndPersonId(id, personId);
@@ -46,7 +46,8 @@ public class AssetsService {
 		Assets assetsFinded = this.findByPerson(id, personId);
 		assetsFinded.setPrice(assets.getPrice());
 		assetsFinded.setAsstes(assets.getAsstes());
-		return this.assetsRepository.save(assetsFinded);
+		this.assetsRepository.save(assetsFinded);
+		return assetsFinded;
 	}
 	
 	public void delete(Integer id, Integer personId) {

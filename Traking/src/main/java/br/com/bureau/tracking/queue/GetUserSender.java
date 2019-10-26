@@ -1,4 +1,4 @@
-package br.com.bureau.earnings.queues;
+package br.com.bureau.tracking.queue;
 
 import java.util.Random;
 
@@ -7,14 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import br.com.bureau.earnings.dto.PersonDTO;
-import br.com.bureau.earnings.exceptions.TimeoutException;
+import br.com.bureau.tracking.dto.UserDTO;
+import br.com.bureau.tracking.exceptions.TimeoutException;
 
 @Component
-public class PersonSender {
+public class GetUserSender {
 
-	@Value("${queue.person}")
-	private String personQueue;
+	@Value("${queue.user}")
+	private String userQueue;
 
 	@Value("${rabbit.timeout}")
 	private Integer timeout;
@@ -23,20 +23,20 @@ public class PersonSender {
 	private RabbitTemplate rabbitTemplate;
 
 	@Autowired
-	private PersonResponseConsumer responseConsumer;
+	private GetUserResponseConsumer responseConsumer;
 
-	public PersonDTO getPersonByTokenSync(String personId) {
+	public UserDTO getUserByTokenSync(String token) {
 		Random random = new Random();
 		int id = Math.abs(random.nextInt());
-		this.rabbitTemplate.convertAndSend(this.personQueue, "", params -> {
-			params.getMessageProperties().getHeaders().put("personId", personId);
+		this.rabbitTemplate.convertAndSend(this.userQueue, "", params -> {
+			params.getMessageProperties().getHeaders().put("token", token);
 			params.getMessageProperties().getHeaders().put("uuid", id);
 			return params;
 		});
 		return this.awaitMessage(id);
 	}
 
-	private PersonDTO awaitMessage(int id) {
+	private UserDTO awaitMessage(int id) {
 		this.responseConsumer.setBuffer(id);
 		for (int i = 0; i < this.timeout; i++) {
 			if (this.responseConsumer.getBuffer().containsKey(id)
@@ -56,4 +56,5 @@ public class PersonSender {
 				? this.responseConsumer.getBuffer().get(id)
 				: null;
 	}
+	
 }
