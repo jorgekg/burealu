@@ -34,7 +34,7 @@ public class AddressController {
 	private PageMapper<Address> pageMapper;
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<AddressDTO> find(@PathVariable Integer id, @PathVariable Integer personId) {
+	public ResponseEntity<AddressDTO> find(@PathVariable Integer personId, @PathVariable Integer id) {
 		return ResponseEntity.ok().body(this.addressMapper.toDTO(this.addressService.findByPerson(id, personId)));
 	}
 
@@ -52,14 +52,14 @@ public class AddressController {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<AddressDTO> update(@PathVariable Integer id, @PathVariable Integer personId,
+	public ResponseEntity<AddressDTO> update(@PathVariable Integer personId, @PathVariable Integer id,
 			@Valid @RequestBody AddressDTO addressDTO) {
 		return ResponseEntity.ok().body(this.addressMapper
 				.toDTO(this.addressService.update(id, personId, this.addressMapper.toModel(addressDTO))));
 	}
 	
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<?> delete(@PathVariable Integer id, @PathVariable Integer personId) {
+	public ResponseEntity<?> delete(@PathVariable Integer personId, @PathVariable Integer id) {
 		this.addressService.delete(id, personId);
 		return ResponseEntity.ok().build();
 	}
