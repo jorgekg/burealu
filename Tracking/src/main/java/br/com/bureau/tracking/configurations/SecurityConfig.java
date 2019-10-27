@@ -25,9 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private GetUserSender userSender;
 	
 	public static final String[] PUBLIC_MATCHERS = { "/h2-console/**", "/h2-console/header", "/images/**",
-			"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**", "/csrf", "/traking-api/h2-console/**",
-			"/traking-api/h2-console/header", "/traking-api/images/**", "/traking-api/swagger-ui.html",
-			"/traking-api/webjars/**", "/traking-api/swagger-resources/**", "/traking-api/v2/**", "/traking-api/csrf" };
+			"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**", "/csrf", "/tracking-api/h2-console/**",
+			"/tracking-api/h2-console/header", "/tracking-api/images/**", "/tracking-api/swagger-ui.html",
+			"/tracking-api/webjars/**", "/tracking-api/swagger-resources/**", "/tracking-api/v2/**", "/tracking-api/csrf" };
 	
 	@Override
     protected void configure(HttpSecurity http) throws Exception {

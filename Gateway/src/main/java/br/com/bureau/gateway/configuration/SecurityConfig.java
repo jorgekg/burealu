@@ -35,9 +35,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private JWTUtil jwtUtil;
 
 	private static final String[] PUBLIC_MATCHERS = { "/h2-console/**", "/h2-console/header", "/images/**",
-			"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**", "/csrf", "/traking-api/h2-console/**",
-			"/traking-api/h2-console/header", "/traking-api/images/**", "/traking-api/swagger-ui.html",
-			"/traking-api/webjars/**", "/traking-api/swagger-resources/**", "/traking-api/v2/**", "/traking-api/csrf",
+			"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**", "/csrf", "/tracking-api/h2-console/**",
+			"/tracking-api/h2-console/header", "/tracking-api/images/**", "/tracking-api/swagger-ui.html",
+			"/tracking-api/webjars/**", "/tracking-api/swagger-resources/**", "/tracking-api/v2/**", "/tracking-api/csrf",
 			"/earlings-api/h2-console/**", "/earnings-api/h2-console/header", "/earnings-api/images/**",
 			"/earnings-api/swagger-ui.html", "/earnings-api/webjars/**", "/earnings-api/swagger-resources/**",
 			"/earnings-api/v2/**", "/traking-api/csrf" };
