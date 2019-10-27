@@ -21,7 +21,7 @@ import br.com.bureau.tracking.models.Address;
 import br.com.bureau.tracking.services.AddressService;
 
 @RestController
-@RequestMapping("/people/{personId}/addresses")
+@RequestMapping("/people/{cpf}/addresses")
 public class AddressController {
 
 	@Autowired
@@ -34,33 +34,33 @@ public class AddressController {
 	private PageMapper<Address> pageMapper;
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<AddressDTO> find(@PathVariable Integer personId, @PathVariable Integer id) {
-		return ResponseEntity.ok().body(this.addressMapper.toDTO(this.addressService.findByPerson(id, personId)));
+	public ResponseEntity<AddressDTO> find(@PathVariable String cpf, @PathVariable Integer id) {
+		return ResponseEntity.ok().body(this.addressMapper.toDTO(this.addressService.findByPerson(id, cpf, true)));
 	}
 
 	@GetMapping
-	public ResponseEntity<PageMapper<Address>> list(@PathVariable Integer personId,
+	public ResponseEntity<PageMapper<Address>> list(@PathVariable String cpf,
 			@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size) {
-		return ResponseEntity.ok().body(this.pageMapper.toPage(this.addressService.findAll(personId, page, size)));
+		return ResponseEntity.ok().body(this.pageMapper.toPage(this.addressService.findAll(cpf, page, size)));
 	}
 
 	@PostMapping
-	public ResponseEntity<AddressDTO> create(@PathVariable Integer personId,
+	public ResponseEntity<AddressDTO> create(@PathVariable String cpf,
 			@Valid @RequestBody AddressDTO addressDTO) {
 		return ResponseEntity.ok().body(
-				this.addressMapper.toDTO(this.addressService.create(personId, this.addressMapper.toModel(addressDTO))));
+				this.addressMapper.toDTO(this.addressService.create(cpf, this.addressMapper.toModel(addressDTO))));
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<AddressDTO> update(@PathVariable Integer personId, @PathVariable Integer id,
+	public ResponseEntity<AddressDTO> update(@PathVariable String cpf, @PathVariable Integer id,
 			@Valid @RequestBody AddressDTO addressDTO) {
 		return ResponseEntity.ok().body(this.addressMapper
-				.toDTO(this.addressService.update(id, personId, this.addressMapper.toModel(addressDTO))));
+				.toDTO(this.addressService.update(id, cpf, this.addressMapper.toModel(addressDTO))));
 	}
 	
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<?> delete(@PathVariable Integer personId, @PathVariable Integer id) {
-		this.addressService.delete(id, personId);
+	public ResponseEntity<?> delete(@PathVariable String cpf, @PathVariable Integer id) {
+		this.addressService.delete(id, cpf);
 		return ResponseEntity.ok().build();
 	}
 

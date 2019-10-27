@@ -12,7 +12,7 @@ import br.com.bureau.details.mappers.LastSearchMapper;
 import br.com.bureau.details.services.LastSearchService;
 
 @RestController
-@RequestMapping("/people/{personId}/last_search")
+@RequestMapping("/people/{cpf}/last_search")
 public class LastSearchController {
 	
 	@Autowired
@@ -22,8 +22,8 @@ public class LastSearchController {
 	private LastSearchMapper lastSearchMapper;
 	
 	@GetMapping
-	public ResponseEntity<LastSearchDTO> get(@PathVariable Integer personId) {
-		return ResponseEntity.ok().body(this.lastSearchMapper.toDTO(this.lastSearchService.find(personId)));
+	public ResponseEntity<LastSearchDTO> get(@PathVariable String cpf) {
+		return ResponseEntity.ok().body(this.lastSearchMapper.toDTO(this.lastSearchService.find(cpf)));
 	}
 
 }

@@ -1,7 +1,5 @@
 package br.com.bureau.tracking.services;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,42 +25,42 @@ public class AddressService {
 
 	@Autowired
 	private CertificatedValidator certificatedValidator;
-
-	public Address find(Integer id) {
-		Optional<Address> optional = this.addressRepository.findById(id);
-		if (!optional.isPresent()) {
-			throw new ObjectNotFoundException("Address " + id + " not found");
-		}
-		return optional.get();
+	
+	public Address findByPerson(Integer id, String cpf) {
+		return this.findByPerson(id, cpf, false);
 	}
 
-	public Address findByPerson(Integer id, Integer personId) {
-		Person person = this.personService.find(personId);
+	public Address findByPerson(Integer id, String cpf, Boolean isUpdateLastSearch) {
+		Person person = this.personService.findByCPF(cpf);
 		Address address = this.addressRepository.findByIdAndPerson(id, person);
 		if (address == null) {
 			throw new ObjectNotFoundException("Address " + id + " not found");
 		}
-		this.lastSearchService.updateLastSearch(personId, "Search list addresses");
+		this.certificatedValidator.validate(address);
+		if (isUpdateLastSearch) {
+			this.lastSearchService.updateLastSearch(person.getId(), "Search list addresses");
+		}
 		return address;
 	}
 
-	public Page<Address> findAll(Integer personId, Integer page, Integer size) {
+	public Page<Address> findAll(String cpf, Integer page, Integer size) {
+		Person person = this.personService.findByCPF(cpf);
 		PageRequest pageRequest = PageRequest.of(page, size);
-		Page<Address> pageAddress = this.addressRepository.findByPerson(this.personService.find(personId), pageRequest);
+		Page<Address> pageAddress = this.addressRepository.findByPerson(person, pageRequest);
 		pageAddress.getContent().stream().forEach(address -> {
-			this.lastSearchService.updateLastSearch(personId, "Search list addresses");
+			this.lastSearchService.updateLastSearch(person.getId(), "Search list addresses");
 			this.certificatedValidator.validate(address);
 		});
 		return pageAddress;
 	}
 
-	public Address create(Integer personId, Address address) {
-		address.setPerson(this.personService.find(personId));
+	public Address create(String cpf, Address address) {
+		address.setPerson(this.personService.findByCPF(cpf));
 		return this.addressRepository.save(address);
 	}
 
-	public Address update(Integer id, Integer personId, Address address) {
-		Address addressFinded = this.findByPerson(id, personId);
+	public Address update(Integer id, String cpf, Address address) {
+		Address addressFinded = this.findByPerson(id, cpf);
 		addressFinded.setCity(address.getCity());
 		addressFinded.setNeighborhood(address.getNeighborhood());
 		addressFinded.setStreet(address.getStreet());
@@ -70,8 +68,8 @@ public class AddressService {
 		return this.addressRepository.save(addressFinded);
 	}
 
-	public void delete(Integer id, Integer personId) {
-		Address address = this.findByPerson(id, personId);
+	public void delete(Integer id, String cpf) {
+		Address address = this.findByPerson(id, cpf);
 		this.addressRepository.delete(address);
 	}
 

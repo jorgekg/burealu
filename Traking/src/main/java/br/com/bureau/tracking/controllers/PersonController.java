@@ -37,9 +37,9 @@ public class PersonController {
 		return ResponseEntity.ok().body(this.pageMapper.toPage(this.personSerice.findAll(page, size)));
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<PersonDTO> get(@PathVariable Integer id) {
-		return ResponseEntity.ok().body(this.personMappper.toDTO(this.personSerice.find(id)));
+	@GetMapping("/{cpf}")
+	public ResponseEntity<PersonDTO> get(@PathVariable String cpf) {
+		return ResponseEntity.ok().body(this.personMappper.toDTO(this.personSerice.findByCPF(cpf, true)));
 	}
 
 	@PostMapping
@@ -48,10 +48,10 @@ public class PersonController {
 				.body(this.personMappper.toDTO(this.personSerice.create(this.personMappper.toModel(person))));
 	}
 
-	@PutMapping(value = "/{id}")
-	public ResponseEntity<PersonDTO> update(@PathVariable Integer id, @RequestBody PersonDTO personDTO) {
+	@PutMapping(value = "/{cpf}")
+	public ResponseEntity<PersonDTO> update(@PathVariable String cpf, @RequestBody PersonDTO personDTO) {
 		return ResponseEntity.ok()
-				.body(this.personMappper.toDTO(this.personSerice.update(id, this.personMappper.toModel(personDTO))));
+				.body(this.personMappper.toDTO(this.personSerice.update(cpf, this.personMappper.toModel(personDTO))));
 	}
 
 }

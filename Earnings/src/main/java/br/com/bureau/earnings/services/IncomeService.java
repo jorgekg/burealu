@@ -24,8 +24,12 @@ public class IncomeService {
 	@Autowired
 	private GetPersonSender personSender;
 	
-	public Income findByPerson(Integer id, Integer personId) {
-		Income income = this.incomeRepository.findByIdAndPersonId(id, personId);
+	public Income findByPerson(Integer id, String cpf) {
+		PersonDTO person = this.personSender.getPersonByCPFSync(cpf);
+		if (person == null) {
+			throw new ObjectNotFoundException("Person with cpf " + cpf+ " not found");
+		}
+		Income income = this.incomeRepository.findByIdAndPersonId(id, person.getId());
 		if (income == null) {
 			throw new ObjectNotFoundException("Income " + id + " not found");
 		}
@@ -33,29 +37,33 @@ public class IncomeService {
 		return income;
 	}
 	
-	public Page<Income> list(Integer personId, Integer page, Integer size) {
+	public Page<Income> list(String cpf, Integer page, Integer size) {
+		PersonDTO person = this.personSender.getPersonByCPFSync(cpf);
+		if (person == null) {
+			throw new ObjectNotFoundException("Person with cpf " + cpf+ " not found");
+		}
 		PageRequest pageRequest = PageRequest.of(page, size);
-		return this.incomeRepository.findByPersonId(personId, pageRequest);
+		return this.incomeRepository.findByPersonId(person.getId(), pageRequest);
 	}
 	
-	public Income create(Integer personId, Income income) {
-		PersonDTO person = this.personSender.getPersonByTokenSync(personId.toString());
+	public Income create(String cpf, Income income) {
+		PersonDTO person = this.personSender.getPersonByCPFSync(cpf);
 		if (person == null) {
-			throw new ObjectNotFoundException("Person " + personId + " not found");
+			throw new ObjectNotFoundException("Person with CPF " + cpf + " not found");
 		}
 		income.setPersonId(person.getId());
 		return this.incomeRepository.save(income);
 	}
 	
-	public Income update(Integer id, Integer personId, Income income) {
-		Income incomeFinded = this.findByPerson(id, personId);
+	public Income update(Integer id, String cpf, Income income) {
+		Income incomeFinded = this.findByPerson(id, cpf);
 		incomeFinded.setCompany(income.getCompany());
 		incomeFinded.setSalary(income.getSalary());
 		return this.incomeRepository.save(income);
 	}
 	
-	public void delete(Integer id, Integer personId) {
-		this.incomeRepository.delete(this.findByPerson(id, personId));
+	public void delete(Integer id, String cpf) {
+		this.incomeRepository.delete(this.findByPerson(id, cpf));
 	}
 	
 }

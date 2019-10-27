@@ -1,4 +1,4 @@
-package br.com.bureau.earnings.queues;
+package br.com.bureau.details.queues;
 
 import java.util.Random;
 
@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import br.com.bureau.earnings.dto.PersonDTO;
-import br.com.bureau.earnings.exceptions.TimeoutException;
+import br.com.bureau.details.dto.PersonDTO;
+import br.com.bureau.details.exceptions.TimeoutException;
 
 @Component
 public class GetPersonSender {

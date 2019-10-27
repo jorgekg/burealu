@@ -26,7 +26,7 @@ public class AssetsDTO {
 	@NotNull(message = "Price is required")
 	private Double price;
 	
-	@NotNull(message = "Price is required")
+	@NotNull(message = "Payment method is required")
 	private List<PaymentMethod> paymentMethod;
 	
 }

@@ -21,7 +21,7 @@ import br.com.bureau.tracking.models.Debit;
 import br.com.bureau.tracking.services.DebitService;
 
 @RestController
-@RequestMapping("/people/{personId}/debits")
+@RequestMapping("/people/{cpf}/debits")
 public class DebitController {
 
 	@Autowired
@@ -34,32 +34,32 @@ public class DebitController {
 	private PageMapper<Debit> pageMapper;
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<DebitDTO> find(@PathVariable Integer personId, @PathVariable Integer id) {
-		return ResponseEntity.ok().body(this.debitMapper.toDTO(this.debitService.findByPerson(id, personId)));
+	public ResponseEntity<DebitDTO> find(@PathVariable String cpf, @PathVariable Integer id) {
+		return ResponseEntity.ok().body(this.debitMapper.toDTO(this.debitService.findByPerson(id, cpf, true)));
 	}
 
 	@GetMapping
-	public ResponseEntity<PageMapper<Debit>> list(@PathVariable Integer personId,
+	public ResponseEntity<PageMapper<Debit>> list(@PathVariable String cpf,
 			@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size) {
-		return ResponseEntity.ok().body(this.pageMapper.toPage(this.debitService.findAll(personId, page, size)));
+		return ResponseEntity.ok().body(this.pageMapper.toPage(this.debitService.findAll(cpf, page, size)));
 	}
 
 	@PostMapping
-	public ResponseEntity<DebitDTO> create(@PathVariable Integer personId, @Valid @RequestBody DebitDTO debitDTO) {
+	public ResponseEntity<DebitDTO> create(@PathVariable String cpf, @Valid @RequestBody DebitDTO debitDTO) {
 		return ResponseEntity.ok()
-				.body(this.debitMapper.toDTO(this.debitService.create(personId, this.debitMapper.toModel(debitDTO))));
+				.body(this.debitMapper.toDTO(this.debitService.create(cpf, this.debitMapper.toModel(debitDTO))));
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<DebitDTO> update(@PathVariable Integer personId, @PathVariable Integer id,
+	public ResponseEntity<DebitDTO> update(@PathVariable String cpf, @PathVariable Integer id,
 			@Valid @RequestBody DebitDTO debitDTO) {
 		return ResponseEntity.ok().body(
-				this.debitMapper.toDTO(this.debitService.update(id, personId, this.debitMapper.toModel(debitDTO))));
+				this.debitMapper.toDTO(this.debitService.update(id, cpf, this.debitMapper.toModel(debitDTO))));
 	}
 	
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<DebitDTO> delete(@PathVariable Integer personId, @PathVariable Integer id) {
-		this.debitService.delete(id, personId);
+	public ResponseEntity<DebitDTO> delete(@PathVariable String cpf, @PathVariable Integer id) {
+		this.debitService.delete(id, cpf);
 		return ResponseEntity.ok().build();
 	}
 }

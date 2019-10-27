@@ -17,16 +17,16 @@ public class PersonService {
 	@Autowired
 	private UpdatePersonSender updatePersonSender;
 	
-	public PersonDTO find(Integer id) {
-		PersonDTO person = this.personSender.getPersonByTokenSync(id.toString());
+	public PersonDTO find(String cpf) {
+		PersonDTO person = this.personSender.getPersonByCPFSync(cpf);
 		if (person == null) {
-			throw new ObjectNotFoundException("Person " + id + " not found");
+			throw new ObjectNotFoundException("Person wiith CPF" + cpf + " not found");
 		}
 		return person;
 	}
 	
-	public PersonDTO update(Integer id, PersonDTO personDTO) {
-		PersonDTO person = this.find(id);
+	public PersonDTO update(String cpf, PersonDTO personDTO) {
+		PersonDTO person = this.find(cpf);
 		person.setBirth(personDTO.getBirth());
 		return this.updatePersonSender.updatePersonSync(person);
 	}

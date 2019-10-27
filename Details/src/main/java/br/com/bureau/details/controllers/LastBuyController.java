@@ -12,7 +12,7 @@ import br.com.bureau.details.mappers.LastBuyMapper;
 import br.com.bureau.details.services.LastBuyService;
 
 @RestController
-@RequestMapping("/people/{personId}/last_buy")
+@RequestMapping("/people/{cpf}/last_buy")
 public class LastBuyController {
 	
 	@Autowired
@@ -22,8 +22,8 @@ public class LastBuyController {
 	private LastBuyMapper lastBuyMapper;
 	
 	@GetMapping
-	public ResponseEntity<LastBuyDTO> get(@PathVariable Integer personId) {
-		return ResponseEntity.ok().body(this.lastBuyMapper.toDTO(this.lastBuyService.find(personId)));
+	public ResponseEntity<LastBuyDTO> get(@PathVariable String cpf) {
+		return ResponseEntity.ok().body(this.lastBuyMapper.toDTO(this.lastBuyService.find(cpf)));
 	}
 
 }

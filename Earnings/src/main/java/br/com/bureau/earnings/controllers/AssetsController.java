@@ -21,7 +21,7 @@ import br.com.bureau.earnings.models.Assets;
 import br.com.bureau.earnings.services.AssetsService;
 
 @RestController
-@RequestMapping("/people/{personId}/asstes")
+@RequestMapping("/people/{cpf}/asstes")
 public class AssetsController {
 
 	@Autowired
@@ -34,32 +34,32 @@ public class AssetsController {
 	private PageMapper<Assets> pageMapper;
 
 	@GetMapping()
-	private ResponseEntity<PageMapper<Assets>> list(@PathVariable Integer personId, @RequestParam(defaultValue = "0") Integer page,
+	private ResponseEntity<PageMapper<Assets>> list(@PathVariable String cpf, @RequestParam(defaultValue = "0") Integer page,
 			@RequestParam(defaultValue = "10") Integer size) {
-		return ResponseEntity.ok().body(this.pageMapper.toPage(this.assetsService.list(personId, page, size)));
+		return ResponseEntity.ok().body(this.pageMapper.toPage(this.assetsService.list(cpf, page, size)));
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<AssetsDTO> get(@PathVariable Integer personId, @PathVariable Integer id) {
-		return ResponseEntity.ok().body(this.assetsMapper.toDTO(this.assetsService.findByPerson(id, personId)));
+	public ResponseEntity<AssetsDTO> get(@PathVariable String cpf, @PathVariable Integer id) {
+		return ResponseEntity.ok().body(this.assetsMapper.toDTO(this.assetsService.findByPerson(id, cpf)));
 	}
 
 	@PostMapping
-	public ResponseEntity<AssetsDTO> create(@PathVariable Integer personId, @Valid @RequestBody AssetsDTO assetsDTO) {
+	public ResponseEntity<AssetsDTO> create(@PathVariable String cpf, @Valid @RequestBody AssetsDTO assetsDTO) {
 		return ResponseEntity.ok().body(
-				this.assetsMapper.toDTO(this.assetsService.create(personId, this.assetsMapper.toModel(assetsDTO))));
+				this.assetsMapper.toDTO(this.assetsService.create(cpf, this.assetsMapper.toModel(assetsDTO))));
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<AssetsDTO> update(@PathVariable Integer personId, @PathVariable Integer id,
+	public ResponseEntity<AssetsDTO> update(@PathVariable String cpf, @PathVariable Integer id,
 			@Valid @RequestBody AssetsDTO assetsDTO) {
 		return ResponseEntity.ok().body(
-				this.assetsMapper.toDTO(this.assetsService.update(id, personId, this.assetsMapper.toModel(assetsDTO))));
+				this.assetsMapper.toDTO(this.assetsService.update(id, cpf, this.assetsMapper.toModel(assetsDTO))));
 	}
 	
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<?> delete(@PathVariable Integer personId, @PathVariable Integer id) {
-		this.assetsService.delete(id, personId);
+	public ResponseEntity<?> delete(@PathVariable String cpf, @PathVariable Integer id) {
+		this.assetsService.delete(id, cpf);
 		return ResponseEntity.ok().build();
 	}
 }

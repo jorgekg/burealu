@@ -2,11 +2,16 @@ package br.com.bureau.details.services;
 
 import java.util.Date;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.bureau.details.dto.PersonDTO;
 import br.com.bureau.details.exceptions.ObjectNotFoundException;
 import br.com.bureau.details.models.LastSearch;
+import br.com.bureau.details.models.Moviment;
+import br.com.bureau.details.queues.GetPersonSender;
 import br.com.bureau.details.repositories.LastSearchRepository;
 
 @Service
@@ -14,7 +19,21 @@ public class LastSearchService {
 
 	@Autowired
 	private LastSearchRepository lastSearchRepository;
-	
+
+	@Autowired
+	private MovimentService movimentService;
+
+	@Autowired
+	private GetPersonSender getPersonSender;
+
+	public LastSearch find(String cpf) {
+		PersonDTO person = this.getPersonSender.getPersonByCPFSync(cpf);
+		if (person == null) {
+			throw new ObjectNotFoundException("Last buy of person with CPF " + cpf + " not found");
+		}
+		return this.find(person.getId());
+	}
+
 	public LastSearch find(Integer personId) {
 		LastSearch lastSearch = this.lastSearchRepository.findByPersonId(personId);
 		if (lastSearch == null) {
@@ -22,7 +41,7 @@ public class LastSearchService {
 		}
 		return lastSearch;
 	}
-	
+
 	public LastSearch createOrUpdate(LastSearch lastSearch) {
 		LastSearch search = null;
 		try {
@@ -35,17 +54,25 @@ public class LastSearchService {
 		}
 		return this.doUpdate(lastSearch, search);
 	}
-	
+
+	@Transactional
 	private LastSearch doCreate(LastSearch lastSearch) {
 		lastSearch.setLastSearch(new Date());
-		return this.lastSearchRepository.save(lastSearch);
+		LastSearch search = this.lastSearchRepository.save(lastSearch);
+		this.movimentService.create(new Moviment(null, lastSearch.getPersonId(), lastSearch.getLastSearch(),
+				lastSearch.getDetails() + " - bureau: " + lastSearch.getBureau()));
+		return search;
 	}
-	
+
+	@Transactional
 	private LastSearch doUpdate(LastSearch lastSearch, LastSearch finded) {
 		finded.setLastSearch(new Date());
 		finded.setBureau(lastSearch.getBureau());
 		finded.setDetails(lastSearch.getDetails());
-		return this.lastSearchRepository.save(finded);
+		LastSearch search = this.lastSearchRepository.save(finded);
+		this.movimentService.create(new Moviment(null, lastSearch.getPersonId(), lastSearch.getLastSearch(),
+				lastSearch.getDetails() + " - bureau: " + lastSearch.getBureau()));
+		return search;
 	}
-	
+
 }

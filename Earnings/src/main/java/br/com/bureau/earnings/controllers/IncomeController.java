@@ -21,7 +21,7 @@ import br.com.bureau.earnings.models.Income;
 import br.com.bureau.earnings.services.IncomeService;
 
 @RestController
-@RequestMapping("/people/{personId}/incomes")
+@RequestMapping("/people/{cpf}/incomes")
 public class IncomeController {
 
 	@Autowired
@@ -34,32 +34,32 @@ public class IncomeController {
 	private PageMapper<Income> pageMapper;
 
 	@GetMapping()
-	private ResponseEntity<PageMapper<Income>> list(@PathVariable Integer personId, @RequestParam(defaultValue = "0") Integer page,
+	private ResponseEntity<PageMapper<Income>> list(@PathVariable String cpf, @RequestParam(defaultValue = "0") Integer page,
 			@RequestParam(defaultValue = "10") Integer size) {
-		return ResponseEntity.ok().body(this.pageMapper.toPage(this.incomeService.list(personId, page, size)));
+		return ResponseEntity.ok().body(this.pageMapper.toPage(this.incomeService.list(cpf, page, size)));
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<IncomeDTO> get(@PathVariable Integer personId, @PathVariable Integer id) {
-		return ResponseEntity.ok().body(this.incomeMapper.toDTO(this.incomeService.findByPerson(id, personId)));
+	public ResponseEntity<IncomeDTO> get(@PathVariable String cpf, @PathVariable Integer id) {
+		return ResponseEntity.ok().body(this.incomeMapper.toDTO(this.incomeService.findByPerson(id, cpf)));
 	}
 
 	@PostMapping
-	public ResponseEntity<IncomeDTO> create(@PathVariable Integer personId, @Valid @RequestBody IncomeDTO incomeDTO) {
+	public ResponseEntity<IncomeDTO> create(@PathVariable String cpf, @Valid @RequestBody IncomeDTO incomeDTO) {
 		return ResponseEntity.ok().body(
-				this.incomeMapper.toDTO(this.incomeService.create(personId, this.incomeMapper.toModel(incomeDTO))));
+				this.incomeMapper.toDTO(this.incomeService.create(cpf, this.incomeMapper.toModel(incomeDTO))));
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<IncomeDTO> update(@PathVariable Integer personId, @PathVariable Integer id,
+	public ResponseEntity<IncomeDTO> update(@PathVariable String cpf, @PathVariable Integer id,
 			@Valid @RequestBody IncomeDTO incomeDTO) {
 		return ResponseEntity.ok().body(
-				this.incomeMapper.toDTO(this.incomeService.update(id, personId, this.incomeMapper.toModel(incomeDTO))));
+				this.incomeMapper.toDTO(this.incomeService.update(id, cpf, this.incomeMapper.toModel(incomeDTO))));
 	}
 
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<?> delete(@PathVariable Integer personId, @PathVariable Integer id) {
-		this.incomeService.delete(id, personId);
+	public ResponseEntity<?> delete(@PathVariable String cpf, @PathVariable Integer id) {
+		this.incomeService.delete(id, cpf);
 		return ResponseEntity.ok().build();
 	}
 }

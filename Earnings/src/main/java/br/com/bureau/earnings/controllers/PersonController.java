@@ -21,13 +21,13 @@ public class PersonController {
 	@Autowired
 	private PersonService personService;
 	
-	@GetMapping("/{id}")
-	public ResponseEntity<PersonDTO> get(@PathVariable Integer id) {
-		return ResponseEntity.ok().body(this.personService.find(id));
+	@GetMapping("/{cpf}")
+	public ResponseEntity<PersonDTO> get(@PathVariable String cpf) {
+		return ResponseEntity.ok().body(this.personService.find(cpf));
 	}
 	
-	@PutMapping("/{id}")
-	public ResponseEntity<PersonDTO> update(@PathVariable Integer id, @Valid @RequestBody PersonDTO personDTO) {
-		return ResponseEntity.ok().body(this.personService.update(id, personDTO));
+	@PutMapping("/{cpf}")
+	public ResponseEntity<PersonDTO> update(@PathVariable String cpf, @Valid @RequestBody PersonDTO personDTO) {
+		return ResponseEntity.ok().body(this.personService.update(cpf, personDTO));
 	}
 }

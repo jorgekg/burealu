@@ -31,14 +31,21 @@ public class PersonService {
 			throw new ObjectNotFoundException("Person " + id + " not found");
 		}
 		this.certificatedValidator.validate(optional.get());
-		this.lastSearchService.updateLastSearch(id, "Search person information");
 		return optional.get();
 	}
 
 	public Person findByCPF(String cpf) {
+		return this.findByCPF(cpf, false);
+	}
+	
+	public Person findByCPF(String cpf, Boolean isUpdateLastSearch) {
 		Person person = this.personRepository.findByCpf(cpf);
 		if (person == null) {
 			throw new ObjectNotFoundException("Cpf " + cpf + " not found");
+		}
+		this.certificatedValidator.validate(person);
+		if (isUpdateLastSearch) {
+			this.lastSearchService.updateLastSearch(person.getId(), "Search person information");
 		}
 		return person;
 	}
@@ -63,8 +70,8 @@ public class PersonService {
 		return this.personRepository.save(person);
 	}
 
-	public Person update(Integer id, Person person) {
-		Person personFinded = this.find(id);
+	public Person update(String cpf, Person person) {
+		Person personFinded = this.findByCPF(cpf);
 		personFinded.setName(person.getName());
 		return this.personRepository.save(personFinded);
 	}

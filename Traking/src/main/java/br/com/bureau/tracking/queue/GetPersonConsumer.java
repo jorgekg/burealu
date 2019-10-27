@@ -20,17 +20,19 @@ public class GetPersonConsumer {
 
 	@RabbitListener(queues = { "${queue.person}" })
 	public void consumer(@Payload Message message) {
-		String personId = message.getMessageProperties().getHeaders().get("personId").toString();
-		String uuid = message.getMessageProperties().getHeaders().get("uuid").toString();
-		Person person = null;
-		if (personId != null) {
-			try {
-				person = this.personService.find(Integer.parseInt(personId));
-			} catch (Exception e) {
-				// ignore this error
+		if (message.getMessageProperties().getHeaders().containsKey("cpf")) {
+			String cpf = message.getMessageProperties().getHeaders().get("cpf").toString();
+			String uuid = message.getMessageProperties().getHeaders().get("uuid").toString();
+			Person person = null;
+			if (cpf != null) {
+				try {
+					person = this.personService.findByCPF(cpf);
+				} catch (Exception e) {
+					// ignore this error
+				}
 			}
+			this.personResponseSender.sendUser(person, uuid);
 		}
-		this.personResponseSender.sendUser(person, uuid);
 	}
 
 }

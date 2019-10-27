@@ -14,9 +14,17 @@ public class RabbitMQConfig {
 	@Value("${queue.last.search.update}")
     private String getLastSearchUpdateQueue;
 	
+	@Value("${queue.last.buy.update}")
+    private String getLastBuyUpdateQueue;
+	
 	@Bean
 	public Queue lastSearchUpdateQueue() {
 		return new Queue(this.getLastSearchUpdateQueue, true);
+	}
+	
+	@Bean
+	public Queue lastBuyUpdateQueue() {
+		return new Queue(this.getLastBuyUpdateQueue, true);
 	}
 	
 	@Bean

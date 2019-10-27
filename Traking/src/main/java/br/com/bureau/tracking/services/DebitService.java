@@ -26,42 +26,48 @@ public class DebitService {
 	@Autowired
 	private CertificatedValidator certificatedValidator;
 
-	public Debit findByPerson(Integer id, Integer personId) {
-		Person person = this.personService.find(personId);
+	public Debit findByPerson(Integer id, String cpf) {
+		return this.findByPerson(id, cpf, false);
+	}
+	
+	public Debit findByPerson(Integer id, String cpf, Boolean isUpdateLastSearch) {
+		Person person = this.personService.findByCPF(cpf);
 		Debit debit = this.debitRepository.findByIdAndPerson(id, person);
 		if (debit == null) {
 			throw new ObjectNotFoundException("Debit " + id + " not found");
 		}
 		this.certificatedValidator.validate(debit);
-		this.lastSearchService.updateLastSearch(personId, "Search list debit");
+		if (isUpdateLastSearch) {
+			this.lastSearchService.updateLastSearch(person.getId(), "Search list debit");
+		}
 		return debit;
 	}
 
-	public Page<Debit> findAll(Integer personId, Integer page, Integer size) {
+	public Page<Debit> findAll(String cpf, Integer page, Integer size) {
+		Person person = this.personService.findByCPF(cpf);
 		PageRequest pageRequest = PageRequest.of(page, size);
-		Person person = this.personService.find(personId);
 		Page<Debit> debitPage = this.debitRepository.findByPerson(person, pageRequest);
 		debitPage.stream().forEach(debitItem -> {
-			this.lastSearchService.updateLastSearch(personId, "Search list debit");
+			this.lastSearchService.updateLastSearch(person.getId(), "Search list debit");
 			this.certificatedValidator.validate(debitItem);
 		});
 		return debitPage;
 	}
 
-	public Debit create(Integer personId, Debit debit) {
-		debit.setPerson(this.personService.find(personId));
+	public Debit create(String cpf, Debit debit) {
+		debit.setPerson(this.personService.findByCPF(cpf));
 		return this.debitRepository.save(debit);
 	}
 
-	public Debit update(Integer id, Integer personId, Debit debit) {
-		Debit debitFinded = this.findByPerson(id, personId);
+	public Debit update(Integer id, String cpf, Debit debit) {
+		Debit debitFinded = this.findByPerson(id, cpf);
 		debitFinded.setPrice(debit.getPrice());
 		debitFinded.setCompany(debit.getCompany());
 		return this.debitRepository.save(debitFinded);
 	}
 
-	public void delete(Integer id, Integer personId) {
-		Debit debit = this.findByPerson(id, personId);
+	public void delete(Integer id, String cpf) {
+		Debit debit = this.findByPerson(id, cpf);
 		this.debitRepository.delete(debit);
 	}
 }

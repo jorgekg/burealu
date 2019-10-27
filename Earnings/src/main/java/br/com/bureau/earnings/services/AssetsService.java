@@ -26,47 +26,49 @@ public class AssetsService {
 	@Autowired
 	private GetPersonSender personSender;
 	
-	public Assets findByPerson(Integer id, Integer personId) {
-		Assets assets = this.assetsRepository.findByIdAndPersonId(id, personId);
+	public Assets findByPerson(Integer id, String cpf) {
+		PersonDTO person = this.personSender.getPersonByCPFSync(cpf);
+		Assets assets = this.assetsRepository.findByIdAndPersonId(id, person.getId());
 		if (assets == null) {
 			throw new ObjectNotFoundException("Assets " + id + " not foud");
 		}
 		return assets;
 	}
 	
-	public Page<Assets> list(Integer personId, Integer page, Integer size) {
+	public Page<Assets> list(String cpf, Integer page, Integer size) {
+		PersonDTO person = this.personSender.getPersonByCPFSync(cpf);
 		PageRequest pageRequest = PageRequest.of(page, size);
-		return this.assetsRepository.findByPersonId(personId, pageRequest);
+		return this.assetsRepository.findByPersonId(person.getId(), pageRequest);
 	}
 	
 	@Transactional
-	public Assets create(Integer personId, Assets assets) {
-		PersonDTO person = this.personSender.getPersonByTokenSync(personId.toString());
+	public Assets create(String cpf, Assets assets) {
+		PersonDTO person = this.personSender.getPersonByCPFSync(cpf);
 		if (person == null) {
-			throw new ObjectNotFoundException("Person " + personId + " not found");
+			throw new ObjectNotFoundException("Person with cpf " + cpf + " not found");
 		}
 		assets.setPersonId(person.getId());
 		if (assets.getPaymentMethod().contains(PaymentMethod.CREDIT_CARD)) {
-			this.lastBuyService.lastBuyUpdate(personId, "Buy " + assets.getAsstes());
+			this.lastBuyService.lastBuyUpdate(person.getId(), "Buy " + assets.getAsstes());
 		}
 		return this.assetsRepository.save(assets);
 	}
 	
 	@Transactional
-	public Assets update(Integer id, Integer personId, Assets assets) {
-		Assets assetsFinded = this.findByPerson(id, personId);
+	public Assets update(Integer id, String cpf, Assets assets) {
+		Assets assetsFinded = this.findByPerson(id, cpf);
 		assetsFinded.setPrice(assets.getPrice());
 		assetsFinded.setAsstes(assets.getAsstes());
 		assetsFinded.setPaymentMethod(assets.getPaymentMethod());
 		if (assets.getPaymentMethod().contains(PaymentMethod.CREDIT_CARD)) {
-			this.lastBuyService.lastBuyUpdate(personId, "Buy " + assets.getAsstes());
+			this.lastBuyService.lastBuyUpdate(assets.getPersonId(), "Buy " + assets.getAsstes());
 		}
 		this.assetsRepository.save(assetsFinded);
 		return assetsFinded;
 	}
 	
-	public void delete(Integer id, Integer personId) {
-		this.assetsRepository.delete(this.findByPerson(id, personId));
+	public void delete(Integer id, String cpf) {
+		this.assetsRepository.delete(this.findByPerson(id, cpf));
 	}
 
 }
