@@ -25,10 +25,11 @@ public class AddressSender {
 	@Autowired
 	private AddressResponseConsumer responseConsumer;
 
-	public AddressDTO sendSync(AddressDTO addres) {
+	public AddressDTO sendSync(String cpf, AddressDTO addres) {
 		Random random = new Random();
 		int id = Math.abs(random.nextInt());
 		this.rabbitTemplate.convertAndSend(this.addressQueue, addres == null ? "" : addres, params -> {
+			params.getMessageProperties().getHeaders().put("cpf", cpf);
 			params.getMessageProperties().getHeaders().put("uuid", id);
 			return params;
 		});

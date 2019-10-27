@@ -37,7 +37,7 @@ public class AddressResponseConsumer {
 		if (address != null && address.getId() != null) {
 			buffer.put(Integer.parseInt(responseId), address);
 		} else {
-			buffer.remove(Integer.parseInt(responseId));
+			buffer.put(Integer.parseInt(responseId), new AddressDTO());
 		}
 	}
 }

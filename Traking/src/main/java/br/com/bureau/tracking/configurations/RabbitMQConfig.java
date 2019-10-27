@@ -17,6 +17,9 @@ public class RabbitMQConfig {
 	@Value("${queue.person}")
     private String getPersonQueue;
 	
+	@Value("${queue.address}")
+    private String getAddressQueue;
+	
 	@Value("${queue.person.update}")
     private String getPersonUpdateQueue;
 	
@@ -28,6 +31,11 @@ public class RabbitMQConfig {
 	@Bean
 	public Queue personQueue() {
 		return new Queue(this.getPersonQueue, true);
+	}
+	
+	@Bean
+	public Queue addressQueue() {
+		return new Queue(this.getAddressQueue, true);
 	}
 	
 	@Bean

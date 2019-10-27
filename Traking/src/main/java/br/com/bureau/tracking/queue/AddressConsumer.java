@@ -27,12 +27,16 @@ public class AddressConsumer {
 		if (address != null) {
 			String cpf = message.getMessageProperties().getHeaders().get("cpf").toString();
 			String uuid = message.getMessageProperties().getHeaders().get("uuid").toString();
-			if (address.getId() != null) {
-				address = this.addressMapper
-						.toDTO(this.addressService.create(cpf, this.addressMapper.toModel(address)));
-			} else {
-				address = this.addressMapper
-						.toDTO(this.addressService.update(address.getId(), cpf, this.addressMapper.toModel(address)));
+			try {
+				if (address.getId() == null) {
+					address = this.addressMapper
+							.toDTO(this.addressService.create(cpf, this.addressMapper.toModel(address)));
+				} else {
+					address = this.addressMapper
+							.toDTO(this.addressService.update(address.getId(), cpf, this.addressMapper.toModel(address)));
+				}
+			} catch (Exception e) {
+				address = new AddressDTO();
 			}
 			this.personResponseSender.sendAddress(address, uuid);
 		}
