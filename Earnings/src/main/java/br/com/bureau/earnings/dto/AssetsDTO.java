@@ -1,8 +1,11 @@
 package br.com.bureau.earnings.dto;
 
+import java.util.List;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import br.com.bureau.earnings.models.enuns.PaymentMethod;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,5 +25,8 @@ public class AssetsDTO {
 	
 	@NotNull(message = "Price is required")
 	private Double price;
+	
+	@NotNull(message = "Price is required")
+	private List<PaymentMethod> paymentMethod;
 	
 }

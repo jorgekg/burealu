@@ -9,11 +9,11 @@ import br.com.bureau.earnings.models.Assets;
 public class AssetsMapper {
 
 	public AssetsDTO toDTO(Assets assets) {
-		return new AssetsDTO(assets.getId(), assets.getAsstes(), assets.getPrice());
+		return new AssetsDTO(assets.getId(), assets.getAsstes(), assets.getPrice(), assets.getPaymentMethod());
 	}
 
 	public Assets toModel(AssetsDTO assetsDTO) {
-		return new Assets(assetsDTO.getId(), null, assetsDTO.getAsstes(), assetsDTO.getPrice(), null);
+		return new Assets(assetsDTO.getId(), null, assetsDTO.getAsstes(), assetsDTO.getPrice(), assetsDTO.getPaymentMethod(), null);
 	}
 	
 }
