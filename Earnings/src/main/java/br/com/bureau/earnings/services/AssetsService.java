@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import br.com.bureau.earnings.dto.PersonDTO;
 import br.com.bureau.earnings.exceptions.ObjectNotFoundException;
 import br.com.bureau.earnings.models.Assets;
-import br.com.bureau.earnings.models.enuns.PaymentMethod;
 import br.com.bureau.earnings.queues.GetPersonSender;
 import br.com.bureau.earnings.repositories.AssetsRepository;
 
@@ -48,9 +47,7 @@ public class AssetsService {
 			throw new ObjectNotFoundException("Person with cpf " + cpf + " not found");
 		}
 		assets.setPersonId(person.getId());
-		if (assets.getPaymentMethod().contains(PaymentMethod.CREDIT_CARD)) {
-			this.lastBuyService.lastBuyUpdate(person.getId(), "Buy " + assets.getAsstes());
-		}
+		this.lastBuyService.lastBuyUpdate(person.getId(), "Buy " + assets.getAsstes(), assets.getPaymentMethod());
 		return this.assetsRepository.save(assets);
 	}
 	
@@ -60,9 +57,7 @@ public class AssetsService {
 		assetsFinded.setPrice(assets.getPrice());
 		assetsFinded.setAsstes(assets.getAsstes());
 		assetsFinded.setPaymentMethod(assets.getPaymentMethod());
-		if (assets.getPaymentMethod().contains(PaymentMethod.CREDIT_CARD)) {
-			this.lastBuyService.lastBuyUpdate(assets.getPersonId(), "Buy " + assets.getAsstes());
-		}
+		this.lastBuyService.lastBuyUpdate(assets.getPersonId(), "Updated " + assets.getAsstes(), assets.getPaymentMethod());
 		this.assetsRepository.save(assetsFinded);
 		return assetsFinded;
 	}

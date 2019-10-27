@@ -40,7 +40,7 @@ public class CustomAuthorization extends GenericFilterBean {
 			SecurityContextHolder.getContext().setAuthentication(details);
 			chain.doFilter(request, response);
 	    } else {
-	    	this.sendFaileAuthorization(response);
+	    	chain.doFilter(request, response);
 	    }
     }
 	

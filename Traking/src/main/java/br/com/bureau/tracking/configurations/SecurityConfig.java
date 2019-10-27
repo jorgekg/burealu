@@ -24,9 +24,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private GetUserSender userSender;
 	
+	public static final String[] PUBLIC_MATCHERS = { "/h2-console/**", "/h2-console/header", "/images/**",
+			"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/**", "/csrf", "/traking-api/h2-console/**",
+			"/traking-api/h2-console/header", "/traking-api/images/**", "/traking-api/swagger-ui.html",
+			"/traking-api/webjars/**", "/traking-api/swagger-resources/**", "/traking-api/v2/**", "/traking-api/csrf" };
+	
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable();
+		http.cors().and().authorizeRequests().antMatchers(PUBLIC_MATCHERS).permitAll().anyRequest().authenticated();
 		http.addFilterAfter(new CustomAuthorization(this.userSender), BasicAuthenticationFilter.class);
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import br.com.bureau.details.dto.PersonDTO;
 import br.com.bureau.details.exceptions.ObjectNotFoundException;
 import br.com.bureau.details.models.LastSearch;
-import br.com.bureau.details.models.Moviment;
 import br.com.bureau.details.queues.GetPersonSender;
 import br.com.bureau.details.repositories.LastSearchRepository;
 
@@ -19,10 +18,7 @@ public class LastSearchService {
 
 	@Autowired
 	private LastSearchRepository lastSearchRepository;
-
-	@Autowired
-	private MovimentService movimentService;
-
+	
 	@Autowired
 	private GetPersonSender getPersonSender;
 
@@ -58,10 +54,7 @@ public class LastSearchService {
 	@Transactional
 	private LastSearch doCreate(LastSearch lastSearch) {
 		lastSearch.setLastSearch(new Date());
-		LastSearch search = this.lastSearchRepository.save(lastSearch);
-		this.movimentService.create(new Moviment(null, lastSearch.getPersonId(), lastSearch.getLastSearch(),
-				lastSearch.getDetails() + " - bureau: " + lastSearch.getBureau()));
-		return search;
+		return this.lastSearchRepository.save(lastSearch);
 	}
 
 	@Transactional
@@ -69,10 +62,7 @@ public class LastSearchService {
 		finded.setLastSearch(new Date());
 		finded.setBureau(lastSearch.getBureau());
 		finded.setDetails(lastSearch.getDetails());
-		LastSearch search = this.lastSearchRepository.save(finded);
-		this.movimentService.create(new Moviment(null, lastSearch.getPersonId(), lastSearch.getLastSearch(),
-				lastSearch.getDetails() + " - bureau: " + lastSearch.getBureau()));
-		return search;
+		return this.lastSearchRepository.save(finded);
 	}
 
 }

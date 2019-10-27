@@ -33,7 +33,9 @@ public class UserController {
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Create success"),
 			@ApiResponse(code = 409, message = "This user has exists"),
-			@ApiResponse(code = 400, message = "Fields required not found")
+			@ApiResponse(code = 400, message = "Fields required not found"),
+			@ApiResponse(code = 401, message = "User not authorized"),
+			@ApiResponse(code = 403, message = "User not authenticated")
 	})
 	@PostMapping
 	public ResponseEntity<UserDTO> create(@Valid @RequestBody User user) {
@@ -43,7 +45,9 @@ public class UserController {
 	@ApiOperation(value = "Change user password by token")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Change success"),
-			@ApiResponse(code = 400, message = "Fields required not found")
+			@ApiResponse(code = 400, message = "Fields required not found"),
+			@ApiResponse(code = 401, message = "User not authorized"),
+			@ApiResponse(code = 403, message = "User not authenticated")
 	})
 	@PutMapping("/password")
 	public ResponseEntity<User> changePassword(@RequestBody User user) {
@@ -52,7 +56,9 @@ public class UserController {
 	
 	@ApiOperation(value = "Assign your roles to someone else")
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "Change success")
+			@ApiResponse(code = 200, message = "Change success"),
+			@ApiResponse(code = 401, message = "User not authorized"),
+			@ApiResponse(code = 403, message = "User not authenticated")
 	})
 	@PutMapping("/{userId}/assign_role")
 	public ResponseEntity<List<Role>> assignRole(@PathVariable Integer userId) {

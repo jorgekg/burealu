@@ -13,11 +13,13 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import br.com.bureau.gateway.models.User;
 import br.com.bureau.gateway.models.enums.Role;
 import br.com.bureau.gateway.services.UserService;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @EnableEurekaClient
 @EnableZuulProxy
 @SpringBootApplication
 @EnableRabbit
+@EnableSwagger2
 public class GatewayApplication implements CommandLineRunner {
 	
 	@Autowired

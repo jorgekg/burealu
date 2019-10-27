@@ -28,7 +28,7 @@ public class GetPersonConsumer {
 				try {
 					person = this.personService.findByCPF(cpf);
 				} catch (Exception e) {
-					// ignore this error
+					person = this.personService.create(new Person(null, cpf, "", null, null));
 				}
 			}
 			this.personResponseSender.sendUser(person, uuid);

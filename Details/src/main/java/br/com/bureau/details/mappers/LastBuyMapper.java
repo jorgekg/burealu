@@ -14,7 +14,7 @@ public class LastBuyMapper {
 	}
 
 	public LastBuyDTO toDTO(LastBuy lastBuy) {
-		return new LastBuyDTO(lastBuy.getId(), lastBuy.getPersonId(), lastBuy.getLastBuy(), lastBuy.getDetails());
+		return new LastBuyDTO(lastBuy.getId(), lastBuy.getPersonId(), lastBuy.getLastBuy(), lastBuy.getDetails(), null);
 	}
 
 }
