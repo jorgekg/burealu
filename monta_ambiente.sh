@@ -1,3 +1,11 @@
+echo "Informe o IP do seu PC (Não vale localhost): Ex: 192.168.0.10"
+read ip;
+echo 's/{ip}/'$ip'/g';
+sed -i 's/{ip}/'$ip'/g' Details/Dockerfile;
+sed -i 's/{ip}/'$ip'/g' Tracking/Dockerfile;
+sed -i 's/{ip}/'$ip'/g' Gateway/Dockerfile;
+sed -i 's/{ip}/'$ip'/g' Earnings/Dockerfile;
+
 sudo docker run -d --hostname my-rabbit --name rabbit13 -p 8070:15672 -p 5672:5672 -p 25676:25676 rabbitmq:3-management
 
 cd Discovery && mvn clean install -DskipTests=true && sudo docker build -t bureau-discovery . && sudo docker run -d --name bureau-discovery -p 8023:8023 bureau-discovery
