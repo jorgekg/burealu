@@ -1,6 +1,4 @@
-package br.com.bureau.details.dto;
-
-import java.util.Date;
+package br.com.bureau.tracking.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,10 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class LastSearchDTO {
 
-	private Integer id;
 	private Integer personId;
-	private Date lastSearch;
-	private String details;
 	private String bureau;
+	private String details;
 	
 }

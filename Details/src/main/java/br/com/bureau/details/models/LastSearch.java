@@ -33,6 +33,8 @@ public class LastSearch implements Serializable {
 	@Column(name = "last_search")
 	private Date lastSearch;
 	
+	private String details;
+	
 	private String bureau;
 	
 }

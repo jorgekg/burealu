@@ -18,9 +18,12 @@ public class PersonService {
 
 	@Autowired
 	private PersonRepository personRepository;
-	
+
 	@Autowired
 	private CertificatedValidator certificatedValidator;
+
+	@Autowired
+	private LastSearchService lastSearchService;
 
 	public Person find(Integer id) {
 		Optional<Person> optional = this.personRepository.findById(id);
@@ -28,9 +31,10 @@ public class PersonService {
 			throw new ObjectNotFoundException("Person " + id + " not found");
 		}
 		this.certificatedValidator.validate(optional.get());
+		this.lastSearchService.updateLastSearch(id, "Search person information");
 		return optional.get();
 	}
-	
+
 	public Person findByCPF(String cpf) {
 		Person person = this.personRepository.findByCpf(cpf);
 		if (person == null) {
@@ -42,7 +46,10 @@ public class PersonService {
 	public Page<Person> findAll(Integer page, Integer size) {
 		PageRequest pageRequest = PageRequest.of(page, size);
 		Page<Person> pagePerson = this.personRepository.findAll(pageRequest);
-		pagePerson.stream().forEach(person -> this.certificatedValidator.validate(person));
+		pagePerson.stream().forEach(person -> {
+			this.lastSearchService.updateLastSearch(person.getId(), "Search person information");
+			this.certificatedValidator.validate(person);
+		});
 		return pagePerson;
 	}
 
@@ -61,7 +68,7 @@ public class PersonService {
 		personFinded.setName(person.getName());
 		return this.personRepository.save(personFinded);
 	}
-	
+
 	public Person updateBirth(Person person) {
 		Person personFinded = this.find(person.getId());
 		personFinded.setBirth(person.getBirth());

@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
-import br.com.bureau.details.LastSearchService;
 import br.com.bureau.details.dto.LastSearchDTO;
 import br.com.bureau.details.mappers.LastSearchMapper;
+import br.com.bureau.details.services.LastSearchService;
 
 @Component
 public class LastSearchConsumer {
@@ -26,3 +26,4 @@ public class LastSearchConsumer {
 	}
 	
 }
+

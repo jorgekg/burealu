@@ -9,7 +9,13 @@ import br.com.bureau.details.models.LastSearch;
 public class LastSearchMapper {
 
 	public LastSearch toModel(LastSearchDTO lastSearchDTO) {
-		return new LastSearch(lastSearchDTO.getId(), lastSearchDTO.getPersonId(), lastSearchDTO.getLastSearch(), lastSearchDTO.getBureau());
+		return new LastSearch(lastSearchDTO.getId(), lastSearchDTO.getPersonId(), lastSearchDTO.getLastSearch(),
+				lastSearchDTO.getDetails(), lastSearchDTO.getBureau());
 	}
-	
+
+	public LastSearchDTO toDTO(LastSearch lastSearch) {
+		return new LastSearchDTO(lastSearch.getId(), lastSearch.getPersonId(), lastSearch.getLastSearch(),
+				lastSearch.getDetails(), lastSearch.getBureau());
+	}
+
 }

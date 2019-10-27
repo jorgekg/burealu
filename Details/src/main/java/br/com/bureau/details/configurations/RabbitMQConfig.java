@@ -11,28 +11,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 	
-	@Value("${queue.response.user}")
-    private String getUserReponse;
-	
-	@Value("${queue.person}")
-    private String getPersonQueue;
-	
-	@Value("${queue.person.update}")
-    private String getPersonUpdateQueue;
+	@Value("${queue.last.search.update}")
+    private String getLastSearchUpdateQueue;
 	
 	@Bean
-	public Queue userReponse() {
-		return new Queue(this.getUserReponse, true);
-	}
-	
-	@Bean
-	public Queue personQueue() {
-		return new Queue(this.getPersonQueue, true);
-	}
-	
-	@Bean
-	public Queue personUpdateQueue() {
-		return new Queue(this.getPersonUpdateQueue, true);
+	public Queue lastSearchUpdateQueue() {
+		return new Queue(this.getLastSearchUpdateQueue, true);
 	}
 	
 	@Bean

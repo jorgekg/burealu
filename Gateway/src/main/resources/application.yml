@@ -4,6 +4,8 @@ zuul:
       sensitiveHeaders:
     earnings-api:
       sensitiveHeaders:
+    details-api:
+      sensitiveHeaders:
     
 hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 60000
 

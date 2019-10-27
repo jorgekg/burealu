@@ -1,4 +1,4 @@
-package br.com.bureau.details;
+package br.com.bureau.details.services;
 
 import java.util.Date;
 
@@ -24,7 +24,12 @@ public class LastSearchService {
 	}
 	
 	public LastSearch createOrUpdate(LastSearch lastSearch) {
-		LastSearch search = this.find(lastSearch.getPersonId());
+		LastSearch search = null;
+		try {
+			search = this.find(lastSearch.getPersonId());
+		} catch (ObjectNotFoundException e) {
+			// ignore this error
+		}
 		if (search == null) {
 			return this.doCreate(lastSearch);
 		}
@@ -39,6 +44,7 @@ public class LastSearchService {
 	private LastSearch doUpdate(LastSearch lastSearch, LastSearch finded) {
 		finded.setLastSearch(new Date());
 		finded.setBureau(lastSearch.getBureau());
+		finded.setDetails(lastSearch.getDetails());
 		return this.lastSearchRepository.save(finded);
 	}
 	
