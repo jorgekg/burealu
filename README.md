@@ -23,7 +23,7 @@
 A coleção do Postman, com todos os endpoints com base no swagger pode se baixada aqui: [Postman Collection Bureau](https://github.com/jorgekg/bureau/blob/master/Bureau.json)
 
 ## Arquitetura
-![Arquitetura](https://ibb.co/kD7z1Wn)
+![Arquitetura](https://github.com/jorgekg/bureau/blob/master/images/Bureau.jpg)
 
 Como podemos ver na image, foi montado um estrutura com 3 microserviços, (Traking, Earnings, Details) um serviço para cada base. Alem dos serviços foram desenvolvidos um Gateway utilizando o Zuul Proxy e um Discovery utilizando Eureka.
 
@@ -35,7 +35,7 @@ Como podemos ver na image, foi montado um estrutura com 3 microserviços, (Traki
 
 ## Base de dados
 
-![Base de dados](https://ibb.co/cXSxwTB)
+![Base de dados](https://github.com/jorgekg/bureau/blob/master/images/Database.jpg)
 
 
  - Base A, que recebeu o nome de Tracking, possui as tabelas de pessoa, endereço e débitos. Como está base é bastante sensível todos os campos os campos são texto para salva-los criptografados, porem devido ao tempo não foi realizado. A base também possível validação no Backend para modificação não autorizadas direto na base de dados, caso editado manualmente sempre que feito um retrieve dos dados será retornado um erro de DataIntegrityException;
