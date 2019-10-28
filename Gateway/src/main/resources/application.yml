@@ -1,6 +1,6 @@
 zuul:
   routes:
-    traking-api:
+    tracking-api:
       sensitiveHeaders:
     earnings-api:
       sensitiveHeaders:
