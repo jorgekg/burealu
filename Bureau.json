@@ -1,0 +1,1438 @@
+{
+	"info": {
+		"_postman_id": "2da49c90-c4b9-4fc0-8f10-93790bec3d90",
+		"name": "Bureau",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"jorgekg3@gmail.com\",\n\t\"password\": \"123455\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8025/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8025",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"admin@admin\",\n\t\"password\": \"12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8025/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8025",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change_password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"password\": \"12345\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8025/users/password",
+							"host": [
+								"localhost"
+							],
+							"port": "8025",
+							"path": [
+								"users",
+								"password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "assign_role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8025/users/1/assign_role",
+							"host": [
+								"localhost"
+							],
+							"port": "8025",
+							"path": [
+								"users",
+								"1",
+								"assign_role"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "traking",
+			"item": [
+				{
+					"name": "people",
+					"item": [
+						{
+							"name": "get",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8025/tracking-api/people/08766825903",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"tracking-api",
+										"people",
+										"08766825903"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"cpf\": \"08766825903\",\n\t\"name\": \"Jorge Guilherme\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8025/tracking-api/people",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"tracking-api",
+										"people"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Jorge Guilherme Kohn\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8025/tracking-api/people/08766825903",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"tracking-api",
+										"people",
+										"08766825903"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "list",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8025/tracking-api/people?page=0&size=15",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"tracking-api",
+										"people"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "15"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "address",
+					"item": [
+						{
+							"name": "create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"city\": \"Gaspar\",\n\t\"neighborhood\": \"Coloninha\",\n\t\"street\": \"Maria da Silva\",\n\t\"number\": \"52\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8025/tracking-api/people/08766825903/addresses",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"tracking-api",
+										"people",
+										"08766825903",
+										"addresses"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"city\": \"Blumenau\",\n\t\"neighborhood\": \"Velha\",\n\t\"street\": \"Arthur shreber\",\n\t\"number\": \"317\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8025/tracking-api/people/08766825903/addresses/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"tracking-api",
+										"people",
+										"08766825903",
+										"addresses",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "list",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8025/tracking-api/people/08766825903/addresses",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"tracking-api",
+										"people",
+										"08766825903",
+										"addresses"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8025/tracking-api/people/08766825903/addresses/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"tracking-api",
+										"people",
+										"08766825903",
+										"addresses",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8025/tracking-api/people/08766825903/addresses/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"tracking-api",
+										"people",
+										"08766825903",
+										"addresses",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "debit",
+					"item": [
+						{
+							"name": "create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"company\": \"Habibs\",\n\t\"price\": 59.99\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8025/tracking-api/people/08766825903/debits",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"tracking-api",
+										"people",
+										"08766825903",
+										"debits"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"company\": \"Serasa\",\n\t\"price\": 1559.99\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8025/tracking-api/people/08766825903/debits/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"tracking-api",
+										"people",
+										"08766825903",
+										"debits",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "list",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8025/tracking-api/people/08766825903/debits?page=0&size=15",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"tracking-api",
+										"people",
+										"08766825903",
+										"debits"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "15"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8025/tracking-api/people/08766825903/debits/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"tracking-api",
+										"people",
+										"08766825903",
+										"debits",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8025/tracking-api/people/08766825903/debits/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"tracking-api",
+										"people",
+										"08766825903",
+										"debits",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "earnings",
+			"item": [
+				{
+					"name": "assets",
+					"item": [
+						{
+							"name": "get",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8025/earnings-api/people/08766825903/asstes/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"earnings-api",
+										"people",
+										"08766825903",
+										"asstes",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"asstes\": \"Fiat palio 2010\",\n\t\"price\": 18500.99,\n\t\"paymentMethod\": [\n\t\t\"CREDIT_CARD\"\t\n\t]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8025/earnings-api/people/08766825903/asstes",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"earnings-api",
+										"people",
+										"08766825903",
+										"asstes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"asstes\": \"Fiat palio 2012\",\n\t\"price\": 1600.99,\n\t\"paymentMethod\": [\n\t\t\"CREDIT_CARD\"\t\n\t]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8025/earnings-api/people/08766825903/asstes/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"earnings-api",
+										"people",
+										"08766825903",
+										"asstes",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8025/earnings-api/people/08766825903/asstes/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"earnings-api",
+										"people",
+										"08766825903",
+										"asstes",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "list",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8025/earnings-api/people/08766825903/asstes/",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"earnings-api",
+										"people",
+										"08766825903",
+										"asstes",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "income",
+					"item": [
+						{
+							"name": "get",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8025/earnings-api/people/08766825903/incomes/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"earnings-api",
+										"people",
+										"08766825903",
+										"incomes",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"company\": \"Serasa Expirian\",\n\t\"salary\": 25000.99\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8025/earnings-api/people/08766825903/incomes",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"earnings-api",
+										"people",
+										"08766825903",
+										"incomes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"company\": \"Serasa Expirian\",\n\t\"salary\": 12000.99\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8025/earnings-api/people/08766825903/incomes/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"earnings-api",
+										"people",
+										"08766825903",
+										"incomes",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8025/earnings-api/people/08766825903/incomes/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"earnings-api",
+										"people",
+										"08766825903",
+										"incomes",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "list",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8025/earnings-api/people/08766825903/incomes/",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"earnings-api",
+										"people",
+										"08766825903",
+										"incomes",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "person",
+					"item": [
+						{
+							"name": "get",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8025/earnings-api/people/08766825903",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"earnings-api",
+										"people",
+										"08766825903"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"birth\": \"1995-04-01T18:25:00\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8025/earnings-api/people/08766825903",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"earnings-api",
+										"people",
+										"08766825903"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "address",
+					"item": [
+						{
+							"name": "create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"city\": \"Gaspar\",\n\t\"neighborhood\": \"Coloninha\",\n\t\"street\": \"Maria da Silva\",\n\t\"number\": \"52\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8025/earnings-api/people/08766825903/addresses",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"earnings-api",
+										"people",
+										"08766825903",
+										"addresses"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"city\": \"Gaspar\",\n\t\"neighborhood\": \"Coloninha\",\n\t\"street\": \"Maria da Silva\",\n\t\"number\": \"55\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8025/earnings-api/people/08766825903/addresses/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"earnings-api",
+										"people",
+										"08766825903",
+										"addresses",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "details",
+			"item": [
+				{
+					"name": "last search",
+					"item": [
+						{
+							"name": "get",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8025/details-api/people/08766825903/last_search",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"details-api",
+										"people",
+										"08766825903",
+										"last_search"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "last buy",
+					"item": [
+						{
+							"name": "get",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8025/details-api/people/08766825903/last_buy",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"details-api",
+										"people",
+										"08766825903",
+										"last_buy"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "moviment",
+					"item": [
+						{
+							"name": "get",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8025/details-api/people/08766825903/moviments",
+									"host": [
+										"localhost"
+									],
+									"port": "8025",
+									"path": [
+										"details-api",
+										"people",
+										"08766825903",
+										"moviments"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
