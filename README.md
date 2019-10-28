@@ -6,7 +6,7 @@
  1. Clonar o repositório.
  2. Pré requisitos: OpenJDK 8 64Bits,  Maven, Docker
  3. Subindo ambiente
- `Linux: executar  arquivo monta_ambiente.sh`
+ `Mac e Linux: executar  arquivo monta_ambiente.sh`
  `Windows: alterar os arquivos Dockerfile de todos o microserviços, alterando o valor de {ip} para o ip da sua maquina (Não vale localhost)`
  `Eclipse: importar os projetos como Maven project, startar o main ou startar os projetos como um projeto Spring Boot.`
  
