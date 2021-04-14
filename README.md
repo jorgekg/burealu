@@ -1,6 +1,4 @@
 
-# Bureau Sistema.
-
 ## Montando ambiente
 
  1. Clonar o repositório.
